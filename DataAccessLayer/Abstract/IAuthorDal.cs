@@ -9,7 +9,7 @@ namespace DataAccessLayer.Abstract
     public interface IAuthorDal : IRepositoryBase<Author>
     {
         Task ActivityAsync(int id);
-        Task<double> AuthorsCountAsync();
+        Task<int> AuthorsCountAsync();
         Task<List<AuthorListDto>> GetAuthors();
         Task<List<AuthorListDto>> GetActiveAuthors();
     }

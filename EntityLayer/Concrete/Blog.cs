@@ -11,10 +11,12 @@ namespace EntityLayer.Concrete
         public string Name { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
+        public int Seen { get; set; }
         public DateTime Created { get; set; } = DateTime.UtcNow.AddHours(4);
         public bool IsDeactive { get; set; }
 
         public Category Category { get; set; }
         public Author Author { get; set; }
+        public List<Comment>? Comments { get; set; }
     }
 }

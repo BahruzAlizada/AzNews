@@ -11,6 +11,7 @@ namespace DataAccessLayer.EntityFramework;
 
 public class EFAuthorDal : EfRepositoryBase<Author, Context>, IAuthorDal
 {
+    #region Activity
     public async Task ActivityAsync(int id)
     {
         using var context = new Context();
@@ -39,19 +40,58 @@ public class EFAuthorDal : EfRepositoryBase<Author, Context>, IAuthorDal
 
         await context.SaveChangesAsync();
     }
+    #endregion
 
-    public Task<double> AuthorsCountAsync()
+    public async Task<int> AuthorsCountAsync()
     {
-        throw new NotImplementedException();
+        using var context = new Context();
+
+        int authorCount = await context.Authors.CountAsync();
+        return authorCount;
     }
 
-    public Task<List<AuthorListDto>> GetActiveAuthors()
+    public async Task<List<AuthorListDto>> GetActiveAuthors()
     {
-        throw new NotImplementedException();
+        using var context = new Context();
+
+        List<Author> authors = await context.Authors.Where(x=>!x.IsDeactive).OrderByDescending(x => x.Blogs.Count).ToListAsync();
+        List<AuthorListDto> authorListDtos = new List<AuthorListDto>();
+
+        foreach (var item in authors)
+        {
+            AuthorListDto ald = new AuthorListDto
+            {
+                Id = item.Id,
+                Image = item.Image,
+                FullName = item.FullName,
+                Bio = item.Bio,
+                BlogCount = await context.Blogs.Where(x => !x.IsDeactive && x.AuthorId == item.Id).CountAsync()
+            };
+            authorListDtos.Add(ald);
+        }
+        return authorListDtos;
     }
 
-    public Task<List<AuthorListDto>> GetAuthors()
+    public async Task<List<AuthorListDto>> GetAuthors()
     {
-        throw new NotImplementedException();
+        using var context = new Context();
+        
+        List<Author> authors = await context.Authors.OrderByDescending(x=>x.Blogs.Count).ToListAsync();
+        List<AuthorListDto> authorListDtos = new List<AuthorListDto>();
+
+        foreach (var item in authors)
+        {
+            AuthorListDto ald = new AuthorListDto
+            {
+                Id = item.Id,
+                Image = item.Image,
+                FullName = item.FullName,
+                Bio = item.Bio,
+                BlogCount = await context.Blogs.Where(x => !x.IsDeactive && x.AuthorId == item.Id).CountAsync(),
+                IsDeactive=item.IsDeactive
+            };
+            authorListDtos.Add(ald);
+        }
+        return authorListDtos;
     }
 }
