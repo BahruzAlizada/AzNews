@@ -5,6 +5,7 @@ using BusinessLayer.DependencyResolvers.Autofac;
 using CoreLayer.DependencyResolvers;
 using CoreLayer.Utilities.IoC;
 using CoreLayer.Extensions;
+using Autofac.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
@@ -25,6 +26,15 @@ builder.Services.AddDependencyResolvers(new ICoreModule[] // Burada IcoreModule 
     new CoreModule()
 });
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("Aznews", opts =>
+    {
+        opts.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,6 +47,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("Aznews");
 
 app.MapControllers();
 

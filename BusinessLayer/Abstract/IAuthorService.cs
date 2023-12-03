@@ -10,7 +10,8 @@ namespace BusinessLayer.Abstract
         Task<IDataResult<int>> AuthorsCountAsync();
         Task<IDataResult<List<AuthorListDto>>> GetAuthors();
         Task<IDataResult<List<AuthorListDto>>> GetActiveAuthors();
-        Task<IResult> Add(AuthorDto authorDto);
-        Task<IResult> Update(AuthorDto authorDto);
+        Task<IResult> AddAsync(AuthorDto authorDto);
+        Task<IResult> UpdateAsync(AuthorDto authorDto);
+        IResult Delete(int id);
     }
 }

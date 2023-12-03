@@ -58,7 +58,7 @@ namespace AzNews.Controllers
         [HttpPost("AddAsync")]
         public async Task<IActionResult> AddAsync(AuthorDto authorDto)
         {
-            var result = await authorService.Add(authorDto);
+            var result = await authorService.AddAsync(authorDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -71,7 +71,7 @@ namespace AzNews.Controllers
         [HttpPut("UpdateAsync")]
         public async Task<IActionResult> UpdateAsync(AuthorDto authorDto)
         {
-            var result = await authorService.Update(authorDto);
+            var result = await authorService.UpdateAsync(authorDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -85,6 +85,19 @@ namespace AzNews.Controllers
         public async Task<IActionResult> ActivityAsync(int id)
         {
             var result = await authorService.ActivityAsync(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        #endregion
+
+        #region Delete
+        [HttpDelete("Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            var result = authorService.Delete(id);
             if (result.Success)
             {
                 return Ok(result);

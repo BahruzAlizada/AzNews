@@ -30,7 +30,7 @@ namespace BusinessLayer.Concrete
         }
 
         [ValidationAspect(typeof(AuthorValidator))]
-        public async Task<IResult> Add(AuthorDto authorDto)
+        public async Task<IResult> AddAsync(AuthorDto authorDto)
         {
             Author author = mapper.Map<Author>(authorDto);
             await authorDal.AddAsync(author);
@@ -41,6 +41,13 @@ namespace BusinessLayer.Concrete
         {
             int count = await authorDal.AuthorsCountAsync();
             return new SuccessDataResult<int>();
+        }
+
+        public IResult Delete(int id)
+        {
+            Author author = authorDal.Get(x => x.Id == id);
+            authorDal.Delete(author);
+            return new SuccessResult(Messages.Deleted);
         }
 
         public async Task<IDataResult<List<AuthorListDto>>> GetActiveAuthors()
@@ -56,7 +63,7 @@ namespace BusinessLayer.Concrete
         }
 
         [ValidationAspect(typeof(AuthorValidator))]
-        public async Task<IResult> Update(AuthorDto authorDto)
+        public async Task<IResult> UpdateAsync(AuthorDto authorDto)
         {
             Author author = mapper.Map<Author>(authorDto);
             await authorDal.UpdateAsync(author);

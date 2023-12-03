@@ -51,6 +51,19 @@ namespace AzNews.Controllers
         }
         #endregion
 
+        #region ContactDetail
+        [HttpGet("GetContactDetail/{id}")]
+        public async Task<IActionResult> GetContactDetail(int id)
+        {
+            var result = await contactService.GetContactDetailById(id);
+            if(result.Success )
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        #endregion
+
         #region ContactCountAsync
         [HttpGet("ContactCountAsync")]
         public async Task<IActionResult> ContactCountAsync()
@@ -72,5 +85,6 @@ namespace AzNews.Controllers
             return BadRequest(result);
         }
         #endregion
+
     }
 }

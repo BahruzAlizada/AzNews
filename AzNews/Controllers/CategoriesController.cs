@@ -79,5 +79,18 @@ namespace AzNews.Controllers
             return BadRequest(result);
         }
         #endregion
+
+        #region Delete
+        [HttpDelete("Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            var result = categoryService.Delete(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        #endregion
     }
 }

@@ -18,6 +18,7 @@ namespace BusinessLayer.Concrete
             this.contactDal = contactDal;
         }
 
+
         [ValidationAspect(typeof(ContactValidator))]
         public async Task<IResult> AddAsync(Contact contact)
         {
@@ -42,10 +43,17 @@ namespace BusinessLayer.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
+        public async Task<IDataResult<Contact>> GetContactDetailById(int id)
+        {
+            Contact contact = await contactDal.GetAsync(x=>x.Id==id);
+            return new SuccessDataResult<Contact>(contact, Messages.GetByFilter);
+        }
+
         public async Task<IDataResult<List<Contact>>> GetContactWithPaged(string search, int take, int page)
         {
             List<Contact> contacts = await contactDal.GetContactWithPaged(search, take, page);
             return new SuccessDataResult<List<Contact>>(contacts, Messages.GetAll);
         }
+
     }
 }

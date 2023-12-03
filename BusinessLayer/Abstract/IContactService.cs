@@ -9,6 +9,7 @@ namespace BusinessLayer.Abstract
         Task<IDataResult<List<Contact>>> GetContactWithPaged(string search, int take, int page);
         Task<int> ContactCountAsync();
         Task<double> ContactPageCountAsync(double take);
+        Task<IDataResult<Contact>> GetContactDetailById(int id);
         Task<IResult> AddAsync(Contact contact);
         IResult Delete(int id);
         
