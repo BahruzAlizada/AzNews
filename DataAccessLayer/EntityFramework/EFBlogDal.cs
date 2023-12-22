@@ -55,8 +55,6 @@ namespace DataAccessLayer.EntityFramework
                 BlogListDto bld = new BlogListDto
                 {
                     Id = item.Id,
-                    AuthorId = item.AuthorId,
-                    CategoryId = item.CategoryId,
                     Name = item.Name,
                     Image = item.Image,
                     Description = item.Description,
@@ -88,8 +86,6 @@ namespace DataAccessLayer.EntityFramework
                 BlogListDto bld = new BlogListDto
                 {
                     Id = item.Id,
-                    AuthorId = item.AuthorId,
-                    CategoryId = item.CategoryId,
                     Name = item.Name,
                     Image = item.Image,
                     Description = item.Description,

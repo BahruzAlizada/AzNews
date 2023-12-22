@@ -67,6 +67,27 @@ namespace Core.DataAccess.EntityFramework
                 : await context.Set<TEntity>().FirstOrDefaultAsync(filter);
         }
 
+        public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> expression = null)
+        {
+            using var context = new TContext();
+
+            if (expression == null)
+            {
+                return await context.Set<TEntity>().CountAsync();
+            }
+            else
+            {
+                return await context.Set<TEntity>().CountAsync(expression);
+            }
+        }
+
+        public int GetCount(Expression<Func<TEntity, bool>> expression = null)
+        {
+            using var context = new TContext();
+
+            return expression == null ? context.Set<TEntity>().Count() : context.Set<TEntity>().Count(expression);
+        }
+
         public void Update(TEntity entity)
         {
             using var context = new TContext();
@@ -85,5 +106,10 @@ namespace Core.DataAccess.EntityFramework
             await context.SaveChangesAsync();
         }
 
+        public IQueryable<TEntity> Query()
+        {
+            using var context = new TContext();
+            return context.Set<TEntity>();
+        }
     }
 }

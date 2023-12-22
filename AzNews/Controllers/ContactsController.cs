@@ -31,9 +31,9 @@ namespace AzNews.Controllers
 
         #region GetContactWithPaged
         [HttpGet("GetContactWithPaged")]
-        public async Task<IActionResult> GetContactWithPaged(string? search, int take, int page=1)
+        public async Task<IActionResult> GetContactWithPaged(int take, int page=1)
         {
-            var result = await contactService.GetContactWithPaged(search,take,page);
+            var result = await contactService.GetContactWithPagedAsync(take,page);
             if(result.Success)
             {
                 return Ok(result);

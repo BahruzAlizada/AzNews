@@ -1,6 +1,4 @@
-﻿
-
-using Core.DataAccess;
+﻿using Core.DataAccess;
 using EntityLayer.Concrete;
 
 namespace DataAccessLayer.Abstract

@@ -6,7 +6,7 @@ namespace BusinessLayer.Abstract
 {
     public interface IContactService
     {
-        Task<IDataResult<List<Contact>>> GetContactWithPaged(string search, int take, int page);
+        Task<IDataResult<List<Contact>>> GetContactWithPagedAsync(int take, int page);
         Task<int> ContactCountAsync();
         Task<double> ContactPageCountAsync(double take);
         Task<IDataResult<Contact>> GetContactDetailById(int id);

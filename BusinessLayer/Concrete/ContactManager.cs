@@ -28,7 +28,7 @@ namespace BusinessLayer.Concrete
 
         public async Task<int> ContactCountAsync()
         {
-            return await contactDal.ContactCountAsync();
+            return await contactDal.GetCountAsync();
         }
 
         public async Task<double> ContactPageCountAsync(double take)
@@ -49,9 +49,9 @@ namespace BusinessLayer.Concrete
             return new SuccessDataResult<Contact>(contact, Messages.GetByFilter);
         }
 
-        public async Task<IDataResult<List<Contact>>> GetContactWithPaged(string search, int take, int page)
+        public async Task<IDataResult<List<Contact>>> GetContactWithPagedAsync(int take, int page)
         {
-            List<Contact> contacts = await contactDal.GetContactWithPaged(search, take, page);
+            List<Contact> contacts = await contactDal.GetContactWithPagedAsync(take, page);
             return new SuccessDataResult<List<Contact>>(contacts, Messages.GetAll);
         }
 

@@ -9,13 +9,13 @@ namespace DataAccessLayer.EntityFramework;
 
 public class EFContactDal : EfRepositoryBase<Contact, Context>, IContactDal
 {
-    public async Task<int> ContactCountAsync()
-    {
-        using var context = new Context();
+    //public async Task<int> ContactCountAsync()
+    //{
+    //    using var context = new Context();
 
-        int count = await context.Contacts.CountAsync();
-        return count;
-    }
+    //    int count = await context.Contacts.CountAsync();
+    //    return count;
+    //}
 
     public async Task<double> ContactPageCountAsync(double take)
     {
@@ -25,7 +25,7 @@ public class EFContactDal : EfRepositoryBase<Contact, Context>, IContactDal
         return pageCount;
     }
 
-    public async Task<List<Contact>> GetContactWithPaged(string search, int take, int page)
+    public async Task<List<Contact>> GetContactWithPagedAsync(int take, int page)
     {
         using var context = new Context();
 

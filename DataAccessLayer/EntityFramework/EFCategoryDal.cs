@@ -5,6 +5,7 @@ using EntityLayer.Concrete;
 using EntityLayer.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DataAccessLayer.EntityFramework
 {
@@ -22,7 +23,16 @@ namespace DataAccessLayer.EntityFramework
             context.SaveChanges();
         }
 
-        public async Task<List<CategoryListDto>> GetActiveCategories()
+        public async Task<List<Category>> GetActiveCategories()
+        {
+            using var context = new Context();
+
+            List<Category> categories = await context.Categories.Where(x=>!x.IsDeactive).
+                Select(c=> new Category { Id=c.Id,Name=c.Name,IsDeactive=c.IsDeactive}).ToListAsync();
+            return categories;
+        }
+
+        public async Task<List<CategoryListDto>> GetActiveCategoryListAsync()
         {
             using var context = new Context();
 
@@ -45,7 +55,16 @@ namespace DataAccessLayer.EntityFramework
             return categoryListDtos;
         }
 
-        public async Task<List<CategoryListDto>> GetAllCategories()
+        public async Task<List<Category>> GetAllCategories()
+        {
+            using var context = new Context();
+
+            List<Category> categories = await context.Categories.
+               Select(c => new Category { Id = c.Id, Name = c.Name, IsDeactive = c.IsDeactive }).ToListAsync();
+            return categories;
+        }
+
+        public async Task<List<CategoryListDto>> GetAllCategoryListAsync()
         {
             using var context = new Context();
 
