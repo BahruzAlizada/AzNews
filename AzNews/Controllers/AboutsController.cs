@@ -28,11 +28,37 @@ namespace AzNews.Controllers
         }
         #endregion
 
+        #region GetAboutAsync
+        [HttpGet("GetAboutAsync")]
+        public async Task<IActionResult> GetAboutAsync()
+        {
+            var result = await aboutService.GetAboutAsync();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        #endregion
+
         #region GetAboutById
         [HttpGet("GetAboutById/{id}")]
         public IActionResult GetAboutById(int id)
         {
             var result = aboutService.GetAboutById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        #endregion
+
+        #region GetAboutByIdAsync
+        [HttpGet("GetAboutByIdAsync")]
+        public async Task<IActionResult> GetAboutByIdAsync(int id)
+        {
+            var result = await aboutService.GetAboutByIdAsync(id);
             if (result.Success)
             {
                 return Ok(result);

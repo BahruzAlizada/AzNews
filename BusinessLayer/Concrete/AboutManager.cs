@@ -19,21 +19,43 @@ namespace BusinessLayer.Concrete
         }
 
 
+        #region GetAbout
         public IDataResult<About> GetAbout()
         {
-            return new SuccessDataResult<About>(aboutDal.Get(),Messages.GetByFilter);
+            return new SuccessDataResult<About>(aboutDal.Get(), Messages.GetByFilter);
         }
+        #endregion
 
+        #region GetAboutAsync
+        public async Task<IDataResult<About>> GetAboutAsync()
+        {
+            About about = await aboutDal.GetAsync();
+            return new SuccessDataResult<About>(about, Messages.GetByFilter);
+        }
+        #endregion
+
+        #region GetAboutById
         public IDataResult<About> GetAboutById(int id)
         {
             return new SuccessDataResult<About>(aboutDal.Get(x => x.Id == id), Messages.GetByFilter);
         }
+        #endregion
 
+        #region GetAboutByIdAsync
+        public async Task<IDataResult<About>> GetAboutByIdAsync(int id)
+        {
+            About about = await aboutDal.GetAsync(x => x.Id == id);
+            return new SuccessDataResult<About>(about, Messages.GetByFilter);
+        }
+        #endregion
+
+        #region Update
         [ValidationAspect(typeof(AboutValidator))]
         public IResult Update(About about)
         {
             aboutDal.Update(about);
             return new SuccessResult(Messages.Updated);
         }
+        #endregion
     }
 }

@@ -40,15 +40,7 @@ public class EFAuthorDal : EfRepositoryBase<Author, Context>, IAuthorDal
     }
     #endregion
 
-    public async Task<int> AuthorsCountAsync()
-    {
-        using var context = new Context();
-
-        int authorCount = await context.Authors.CountAsync();
-        return authorCount;
-    }
-
-    public async Task<List<AuthorListDto>> GetActiveAuthors()
+    public async Task<List<AuthorListDto>> GetActiveAuthorLists()
     {
         using var context = new Context();
 
@@ -70,7 +62,20 @@ public class EFAuthorDal : EfRepositoryBase<Author, Context>, IAuthorDal
         return authorListDtos;
     }
 
-    public async Task<List<AuthorListDto>> GetAuthors()
+    public async Task<List<Author>> GetActiveAuthors()
+    {
+        using var context = new Context();
+
+        List<Author> authors = await context.Authors.Where(x=>!x.IsDeactive).Select(x => new Author
+        {
+            Id = x.Id, Image = x.Image,
+            FullName = x.FullName, IsDeactive = x.IsDeactive, Bio = x.Bio,
+        }).ToListAsync();
+
+        return authors;
+    }
+
+    public async Task<List<AuthorListDto>> GetAllAuthorLists()
     {
         using var context = new Context();
         
@@ -91,5 +96,18 @@ public class EFAuthorDal : EfRepositoryBase<Author, Context>, IAuthorDal
             authorListDtos.Add(ald);
         }
         return authorListDtos;
+    }
+
+    public async Task<List<Author>> GetAllAuthors()
+    {
+        using var context = new Context();
+
+        List<Author> authors = await context.Authors.Select(x => new Author
+        {
+            Id = x.Id, Image = x.Image,
+            FullName = x.FullName, IsDeactive = x.IsDeactive, Bio = x.Bio,
+        }).ToListAsync();
+
+        return authors;
     }
 }

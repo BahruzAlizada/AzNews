@@ -15,11 +15,11 @@ namespace AzNews.Controllers
             this.authorService= authorService;
         }
 
-        #region GetAuthors
-        [HttpGet("GetAuthors")]
-        public async Task<IActionResult> GetAuthors()
+        #region GetAllAuthorsAsync
+        [HttpGet("GetAllAuthorsAsync")]
+        public async Task<IActionResult> GetAllAuthors()
         {
-            var result = await authorService.GetAuthors();
+            var result = await authorService.GetAllAuthorsAsync();
             if (result.Success)
             {
                 return Ok(result);
@@ -28,11 +28,11 @@ namespace AzNews.Controllers
         }
         #endregion
 
-        #region GetActiveAuthors
-        [HttpGet("GetActiveAuthors")]
-        public async Task<IActionResult> GetActiveAuthors()
+        #region GetAuthorListsAsync
+        [HttpGet("GetAuthorListsAsync")]
+        public async Task<IActionResult> GetAuthorListsAsync()
         {
-            var result = await authorService.GetActiveAuthors();
+            var result = await authorService.GetAuthorListsAsync();
             if (result.Success)
             {
                 return Ok(result);
@@ -41,11 +41,68 @@ namespace AzNews.Controllers
         }
         #endregion
 
-        #region AuthorsCountAsync
-        [HttpGet("AuthorsCountAsync")]
-        public async Task<IActionResult> AuthorsCountAsync()
+        #region GetActiveAuthorListsAsync
+        [HttpGet("GetActiveAuthorListsAsync")]
+        public async Task<IActionResult> GetActiveAuthorListsAsync()
         {
-            var result = await authorService.AuthorsCountAsync();
+            var result = await authorService.GetActiveAuthorListsAsync();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        #endregion
+
+        #region GetActiveAuthorsAsync
+        [HttpGet("GetActiveAuthorsAsync")]
+        public async Task<IActionResult> GetActiveAuthorsAsync()
+        {
+            var result = await authorService.GetActiveAuthorsAsync();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        #endregion
+
+        #region GetCachingActiveAuthorsAsync
+        [HttpGet("GetCachingActiveAuthorsAsync")]
+        public async Task<IActionResult> GetCachingActiveAuthorsAsync()
+        {
+            var result = await authorService.GetCachingActiveAuthorsAsync();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        #endregion
+
+        #region AllAuthorsCountAsync
+        [HttpGet("AllAuthorsCountAsync")]
+        public async Task<IActionResult> AllAuthorsCountAsync()
+        {
+            int count = await authorService.AllAuthorsCountAsync();
+            return Ok(count);
+        }
+        #endregion
+
+        #region ActiveAuthorsCountAsync
+        [HttpGet("ActiveAuthorsCountAsync")]
+        public async Task<IActionResult> ActiveAuthorsCountAsync()
+        {
+            int count = await authorService.ActiveAuthorsCountAsync();
+            return Ok(count);
+        }
+        #endregion
+
+        #region GetAuthorByIdAsync
+        [HttpGet("GetAuthorByIdAsync")]
+        public async Task<IActionResult> GetAuthorByIdAsync(int? id)
+        {
+            var result = await authorService.GetAuthorByIdAsync(id);
             if(result.Success)
             {
                 return Ok(result);
@@ -94,7 +151,7 @@ namespace AzNews.Controllers
         #endregion
 
         #region Delete
-        [HttpDelete("Delete/{id}")]
+        [HttpDelete("Delete")]
         public IActionResult Delete(int id)
         {
             var result = authorService.Delete(id);
