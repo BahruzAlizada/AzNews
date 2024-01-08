@@ -69,7 +69,7 @@ public class EFAuthorDal : EfRepositoryBase<Author, Context>, IAuthorDal
         List<Author> authors = await context.Authors.Where(x=>!x.IsDeactive).Select(x => new Author
         {
             Id = x.Id, Image = x.Image,
-            FullName = x.FullName, IsDeactive = x.IsDeactive, Bio = x.Bio,
+            FullName = x.FullName, Bio = x.Bio,
         }).ToListAsync();
 
         return authors;

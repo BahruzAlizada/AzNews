@@ -5,6 +5,7 @@ using EntityLayer.Concrete;
 using EntityLayer.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DataAccessLayer.EntityFramework
 {

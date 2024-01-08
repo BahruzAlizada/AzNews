@@ -28,7 +28,7 @@ namespace DataAccessLayer.EntityFramework
             using var context = new Context();
 
             List<Category> categories = await context.Categories.Where(x=>!x.IsDeactive).
-                Select(c=> new Category { Id=c.Id,Name=c.Name,IsDeactive=c.IsDeactive}).ToListAsync();
+                Select(c=> new Category { Id=c.Id,Name=c.Name}).ToListAsync();
             return categories;
         }
 

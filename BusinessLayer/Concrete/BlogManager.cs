@@ -3,12 +3,14 @@ using BusinessLayer.Abstract;
 using BusinessLayer.Constants;
 using BusinessLayer.ValidationRules.FluentValidation;
 using CoreLayer.Aspects.Autofac.Validation;
+using CoreLayer.Utilities.Business;
 using CoreLayer.Utilities.Results.Abstract;
 using CoreLayer.Utilities.Results.Concrete;
 using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
 using EntityLayer.DTOs;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BusinessLayer.Concrete
 {
@@ -34,6 +36,11 @@ namespace BusinessLayer.Concrete
         [ValidationAspect(typeof(BlogValidator))]
         public async Task<IResult> AddAsync(BlogDto blogDto)
         {
+            var result = BusinessRules.Run(CheckIfNameExist(blogDto.Name));
+            if (result != null)
+            {
+                return result;
+            }
             Blog blog = mapper.Map<Blog>(blogDto);
             await blogDal.AddAsync(blog);
             return new SuccessResult(Messages.Added);
@@ -67,9 +74,40 @@ namespace BusinessLayer.Concrete
         [ValidationAspect(typeof(BlogValidator))]
         public async Task<IResult> UpdateAsync(BlogDto blogDto)
         {
+            var result = BusinessRules.Run(CheckIfNameExistForUpdate(blogDto.Id,blogDto.Name));
+            if (result != null)
+            {
+                return result;
+            }
             Blog blog = mapper.Map<Blog>(blogDto);
             await blogDal.UpdateAsync(blog);
             return new SuccessResult(Messages.Updated);
         }
+
+
+
+
+        #region Business Rules
+        private IResult CheckIfNameExist(string name)
+        {
+            var result = blogDal.GetAll().Any(x=>x.Name == name);
+            if (result)
+            {
+                return new ErrorResult(Messages.NameExisted);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfNameExistForUpdate(int id, string name)
+        {
+            var result = blogDal.GetAll().Any(x => x.Name == name && x.Id != id);
+            if (result)
+            {
+                return new ErrorResult(Messages.NameExisted);
+            }
+            return new SuccessResult();
+        }
+        #endregion
+
     }
 }

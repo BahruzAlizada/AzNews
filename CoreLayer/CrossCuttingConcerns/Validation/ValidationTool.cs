@@ -1,10 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ValidationException = FluentValidation.ValidationException;
 
 namespace CoreLayer.CrossCuttingConcerns.Validation
@@ -16,7 +10,9 @@ namespace CoreLayer.CrossCuttingConcerns.Validation
             var contex = new ValidationContext<object>(entity);
             var result = validator.Validate(contex);
             if (!result.IsValid)
+            {
                 throw new ValidationException(result.Errors);
+            }
         }
     }
 }

@@ -9,14 +9,6 @@ namespace DataAccessLayer.EntityFramework;
 
 public class EFContactDal : EfRepositoryBase<Contact, Context>, IContactDal
 {
-    //public async Task<int> ContactCountAsync()
-    //{
-    //    using var context = new Context();
-
-    //    int count = await context.Contacts.CountAsync();
-    //    return count;
-    //}
-
     public async Task<double> ContactPageCountAsync(double take)
     {
         using var context = new Context();

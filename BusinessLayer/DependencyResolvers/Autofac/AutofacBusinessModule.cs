@@ -25,6 +25,9 @@ namespace BusinessLayer.DependencyResolvers.Autofac
 
             builder.RegisterType<BlogManager>().As<IBlogService>().SingleInstance();
             builder.RegisterType<EFBlogDal>().As<IBlogDal>().SingleInstance();
+
+            builder.RegisterType<SubscribeManager>().As<ISubscribeService>().SingleInstance();
+            builder.RegisterType<EFSubscribeDal>().As<ISubscribeDal>().SingleInstance();    
         }
     }
 }

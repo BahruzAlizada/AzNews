@@ -13,5 +13,6 @@ namespace BusinessLayer.Constants
         public const string Status = "Uğur ilə Statusu dəyişildi";
 
         public static string NameExisted = "Bu addan zatən var";
+        public const string Subscribed = "Abunə olundu";
     }
 }
